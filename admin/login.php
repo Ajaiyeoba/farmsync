@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check input errors before login
     if (empty($email_err) && empty($password_err)) {
         // Prepare a select statement
-        $sql = "SELECT id, email, password FROM users WHERE email = ?";
+        $sql = "SELECT  email,  fullname, password FROM farm_users WHERE email = ?";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
@@ -50,11 +50,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
                             $_SESSION["email"] = $email;
+                        //    $_SESSION['fullname'] = $fullname;
 
                             // Redirect user to welcome page
-                            header("location: farm.php");
+                            header("location: dashboard.php");
                         } else {
                             // Display an error message if password is not valid
                             $password_err = "The password you entered is not valid.";
@@ -170,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </a>
 
         <ul class="navmenu">
-            <li><a href="index.html">Home</a></li>            
+            <li><a href="../index.html">Home</a></li>            
             <li><a href="">About</a></li>            
             <li><a href="">Contact</a></li>
 
@@ -229,25 +229,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="" class="logo">
                     <h2>FarmHouse</h2>
                 </a>
-                <p>Oyo State Nigeria</p>
-                <p>08052148610</p>
-                <p>ajaiyeobajibola@gmail.com</p>
-                <div class="social-icon">
-                    <a href=""><i class="fa-brands fa-facebook"></i></a>
-                    <a href=""><i class="fa-brands fa-twitter"></i></a>
-                    <a href=""><i class="fa-brands fa-instagram"></i></a>
-                    <a href=""><i class="fa-brands fa-tiktok"></i></a>
-                    <a href=""></a>
-                </div>
-            </div>
-
-         
     </section>
-
     <div class="end-text">
         <p> Copyright @2024. All Rghts Reserved</p>
     </div>
 
-    <script src="app.js"></script>
+    <script src="../app.js"></script>
 </body>
 </html>

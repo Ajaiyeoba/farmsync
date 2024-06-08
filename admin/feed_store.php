@@ -1,7 +1,40 @@
 <?php
 
-include 'config.php';
+include '../config.php';
 
+
+if ( 
+    isset($_POST['submit']) )  {
+        $product = $_POST['product'];
+        $quantity = $_POST['quantity'];
+        $unit = $_POST['unit'];
+        $date = $_POST['date'];
+        $comment = $_POST['comment'];
+
+        $sql = " INSERT INTO   `feed_stock` ( product, unit, quantity, date , comment) VALUES (?,?,?,?,?)";
+        // Prepare the SQL statement
+        $stmt = $link ->prepare($sql);
+        if ($stmt) {
+            $stmt->bind_param("ssiss", $product, $unit, $quantity, $date, $comment);
+
+            if ($stmt -> execute()) {
+                header('location:stockdisplay.php');
+                exit();
+            } else {
+                die("Error" .$stmt->error);
+            }
+        } else {
+            die("Error" .$link->error);
+        }
+    }
+
+    session_start();
+
+    // Check if the user is logged in, if not then redirect him to login page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("location: login.php");
+    exit;
+}
 ?>
 
 
@@ -12,7 +45,7 @@ include 'config.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FarmSync Home Page</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
@@ -21,7 +54,7 @@ include 'config.php';
             <h2>FarmSync </h2> 
         </a>
         <ul class="navmenu">
-            <li><a href="index.html">Home</a></li>            
+            <li><a href="../index.html">Home</a></li>            
             <li><a href="">About</a></li>            
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -36,7 +69,7 @@ include 'config.php';
 <div class="formbold-form-wrapper">
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 <div class="formbold-form-title">
-<h2>FarmSync</h2>
+<h2>Feed Stock</h2>
 </div>
 <?php
 $product = isset($_POST['product']) ? $_POST['product'] : '';
@@ -54,17 +87,13 @@ $product = isset($_POST['product']) ? $_POST['product'] : '';
 </div>
 
 <div class="formbold-input-flex">
-<div>
-    <label for="unit" class="formbold-form-label">Unit:</label>
-    <select id="unit" name="unit">
-        <option value=""></option>
-        <option value="kg">Kilograms (kg)</option>
-        <option value="g">Grams (g)</option>
-    </select>
-    <span class="invalid-feedback" style="display: none;"><?php echo $unit_err; ?></span>
+<?php
+$unit = isset($_POST['unit']) ? $_POST['unit'] : '';
+?>
+<label for="unit" class="formbold-form-label">Unit</label>
+<input type="text" name="unit" id="unit" class="formbold-form-input <?php echo (!empty($unit_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $unit; ?>">
+<span class="invalid-feedback" style="display: none;"><?php echo $unit_err; ?></span>
 </div>
-
-
 
 <div class="formbold-input-flex">
 <div>
@@ -73,29 +102,27 @@ $product = isset($_POST['product']) ? $_POST['product'] : '';
     <span class="invalid-feedback" style="display: none;"><?php echo $purchase_err; ?></span>
 </div>
 </div>
-</div>
-
-<div class="formbold-input-flex">
-<label for="image" class="formbold-form-label">Image</label>
-<input type="file" name="image" type="image" id="image" class="formbold-form-input <?php echo (!empty($image_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $image; ?>">
-<span class="invalid-feedback" style="display: none;"><?php echo $image_err; ?></span>
-</div>
 <?php
 $comment = isset($_POST['comment']) ? $_POST['comment'] : '';
 ?>
 <div class="formbold-input-flex">
-<label for="comment" class="formbold-form-label">Comment</label>
+<label for="comment" class="formbold-form-label">Comment </label>
 <input type="text" name="comment" id="comment" class="formbold-form-input <?php echo (!empty($comment_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $comment; ?>">
 <span class="invalid-feedback" style="display: none;"><?php echo $comment_err; ?></span>
 </div>
 
-
 <input type="submit" name="submit" class="formbold-btn" value="Save">
 </form>
-<a href="saved.php">
-    <button class="formbold-btn">View Items</button>
-</a>
+</div>
+
+
+
+
 </section>
+
+<a href="stockdisplay.php">
+    <button class="formbold-btn">View Stock</button>
+</a>
 
     <section class="contact" id="contact">
         <div class="contact-info">

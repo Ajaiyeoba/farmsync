@@ -3,19 +3,19 @@
 require_once "../config.php";
  
 // Define variables and initialize with empty values
-$username = $email = $role  = $password = $confirm_password = "";
-$username_err = $email_err = $role_err = $password_err = $confirm_password_err = "";
+$fullname = $email = $role  = $password = $confirm_password = "";
+$fullname_err = $email_err = $role_err = $password_err = $confirm_password_err = "";
  
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
  
-    // Validate username
-    if (empty(trim($_POST["username"]))) {
-        $username_err = "Please enter a username.";
-    } elseif (!preg_match('/^[a-zA-Z ]+$/', trim($_POST["username"]))) {
-        $username_err = "Enter your full name";
+    // Validate fullname
+    if (empty(trim($_POST["fullname"]))) {
+        $fullname_err = "Please enter a fullname.";
+    } elseif (!preg_match('/^[a-zA-Z ]+$/', trim($_POST["fullname"]))) {
+        $fullname_err = "Enter your full name";
     } else {
-        $username = trim($_POST["username"]);
+        $fullname = trim($_POST["fullname"]);
     }
     
     // Validate email address
@@ -37,15 +37,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = trim($_POST["password"]);
     }
     
-    // Validate phone number
-    if (empty(trim($_POST["role"]))) {
-        $role_err = "Please enter your role.";
-    } elseif (strlen(trim($_POST["role"]))) {
-        $role_err = "Please enter a valid role.";
-    } else {
-        $role = trim($_POST["role"]);
-    }
     
+       // Check if the 'role' key exists in the $_POST array
+            if(isset($_POST['role'])) {
+        $role = htmlspecialchars($_POST['role']);
+          if(empty($role)) {
+        } else {
+      }
+        } 
     // Validate confirm password
     if (empty(trim($_POST["confirm_password"]))) {
         $confirm_password_err = "Please confirm password.";
@@ -57,17 +56,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Check input errors before inserting in database
-    if (empty($username_err) && empty($email_err)  && empty($role_err)  && empty($password_err) && empty($confirm_password_err)) {
+    if (empty($fullname_err) && empty($email_err)  && empty($role_err)  && empty($password_err) && empty($confirm_password_err)) {
         
         // Prepare an insert statement
-        $sql = "INSERT INTO farmu (username, email, role,  password) VALUES (?, ?, ?,?)";
+        $sql = "INSERT INTO farm_users (fullname, email, role,  password) VALUES (?, ?, ?, ?)";
          
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_email, $param_role, $param_password);
+            mysqli_stmt_bind_param($stmt, "ssss", $param_fullname, $param_email, $param_role, $param_password);
             
             // Set parameters
-            $param_username = $username;
+            $param_fullname = $fullname;
             $param_email = $email;
             $param_role = $role;
             $param_password = $password; 
@@ -200,16 +199,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="formbold-input-flex">
     <label for="staff_id" class="formbold-form-label">
-                  Username
+                  fullname
                 </label>
                 <input
                     type="text"
-                    name="username"
-                    id="username"
-                    placeholder="Enter your username"
-                    class="formbold-form-input <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>"  value="<?php echo $username; ?>"
+                    name="fullname"
+                    id="fullname"
+                    placeholder="Enter your fullname"
+                    class="formbold-form-input <?php echo (!empty($fullname_err)) ? 'is-invalid' : ''; ?>"  value="<?php echo $fullname; ?>"
                 />
-                <span class="invalid-feedback" style="display: none;" ><?php echo $username_err; ?></span>
+                <span class="invalid-feedback" style="display: none;" ><?php echo $fullname_err; ?></span>
     </div>
 
     <div class="formbold-input-flex">
@@ -226,19 +225,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="invalid-feedback" style="display: none;" ><?php echo $email_err; ?></span>
               </div>
 
-    <div class="formbold-input-flex">
+
+              <!-- <div class="formbold-input-flex">
     <label for="role" class="formbold-form-label">
-              Role
+            Role
                 </label>
                 <input
-                    type="tel"
+                    type="text"
                     name="role"
                     id="role"
-                    placeholder="Enter your role "
-                    class="formbold-form-input <?php echo (!empty($role)) ? 'is-invalid' : ''; ?>"  value="<?php echo $role; ?>"
+                    placeholder="Enter your role Address"
+                    class="formbold-form-input <?php echo (!empty($role_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $role; ?>"
                 />
                 <span class="invalid-feedback" style="display: none;" ><?php echo $role_err; ?></span>
-    </div>
+              </div> -->
+
+    <div class="formbold-mb-3">
+                <label for="role" class="formbold-form-label">Role</label>
+                <select id="role" name="role" class="formbold-form-input <?php echo (!empty($role_err)) ? 'is-invalid' : ''; ?>">
+                    <option value="">Select Role</option>
+                    <option value="manager">Manager</option>
+                    <option value="worker"> Worker</option>   
+                </select>
+                <span class="invalid-feedback"><?php echo $role_err; ?></span>
+            </div>
+
     <div class="formbold-input-flex">
             <div>
                 <label for="password" class="formbold-form-label">

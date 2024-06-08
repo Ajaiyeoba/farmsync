@@ -1,7 +1,7 @@
 <?php
 
 
-include 'config.php';
+include '../config.php';
 
 if (isset($_POST['submit'])) {
     // Retrieve form data
@@ -50,7 +50,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FarmSync Schedule Page</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <header>
@@ -71,8 +71,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     <section class="hero">
         <div class="">
-            <h2>Feed Schedule</h2>
-            <p>Enter the fish feed schedule with the amount of feed fed to fish stock</p>
+            <h4>Feed Schedule</h4>
+            <p>Please set the fish feed schedule for the workers</p>
             <br>
 </div>
 
@@ -81,7 +81,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <div class="formbold-form-wrapper">
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 <div class="formbold-form-title">
-<h2>FarmSync</h2>
+<!-- <h2>FarmSync</h2> -->
 </div>
 <?php
 $feed = isset($_POST['feed']) ? $_POST['feed'] : '';
@@ -111,7 +111,7 @@ $feed = isset($_POST['feed']) ? $_POST['feed'] : '';
 </section>
 
 <section>
-<a href="farm.php">
+<a href="dashboard.php">
     <button class="formbold-btn">Dashboard</button>
 </a>
 </section>
@@ -121,17 +121,6 @@ $feed = isset($_POST['feed']) ? $_POST['feed'] : '';
                 <a href="" class="logo">
                     <h2>FarmHouse</h2>
                 </a>
-                <p>Oyo State Nigeria</p>
-                <p>08052148610</p>
-                <p>farmsync@gmail.com</p>
-                <div class="social-icon">
-                    <a href=""><i class="fa-brands fa-facebook"></i></a>
-                    <a href=""><i class="fa-brands fa-twitter"></i></a>
-                    <a href=""><i class="fa-brands fa-instagram"></i></a>
-                    <a href=""><i class="fa-brands fa-tiktok"></i></a>
-                    <a href=""></a>
-                </div>
-            </div>
 
          
     </section>

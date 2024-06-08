@@ -1,6 +1,6 @@
-<?php
-require_once "config.php";
 
+<?php
+require_once "../config.php";
 // Start the session
 session_start();
   
@@ -10,19 +10,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   exit;
 }
 
-$sql = " SELECT id, feed, feed_time, quantity from feed_schedule";
-
-
+$sql = " SELECT id, feed,  quantity, feed_time from feed_schedule";
 $stmt =  mysqli_prepare($link, $sql);
 
 if($stmt) {
-    // mysqli_stmt_bind_param($stmt, "i" , $_SESSION["id"]);
     mysqli_stmt_execute($stmt);
-
     $result  = mysqli_stmt_get_result($stmt);
-
     $farm = [];
-
     if ($result) {
         while ($row = mysqli_fetch_assoc($result)) {
             $farm[] = $row; 
@@ -31,13 +25,10 @@ if($stmt) {
     }
     else {
         echo "error" . mysqli_error($link);
-        
     }
     mysqli_close($link); 
 }
-
 ?>
-
 
 
 <!DOCTYPE html>
@@ -46,7 +37,7 @@ if($stmt) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <header>
@@ -55,7 +46,7 @@ if($stmt) {
         </a>
 
         <ul class="navmenu">
-            <li><a href="index.html">Home</a></li>            
+            <li><a href="../index.html">Home</a></li>            
             <li><a href="">About</a></li>            
             <li><a href="">Contact</a></li>
 
@@ -82,9 +73,7 @@ if($stmt) {
                                     <th>Id</th>
                                     <th>Feed </th>
                                     <th>Time</th>
-                                    <th>Quantity</th>
-                                
-                                    
+                                    <th>Quantity</th>     
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,11 +82,10 @@ if($stmt) {
                                 <td class="column1"> <?php echo ($rows['id']); ?></td>   
                                 <td class="column1"> <?php echo ($rows['feed']); ?></td>
                                 <td class="column2"> <?php echo ($rows['feed_time']); ?></td>
-                                <td class="column3"> <?php echo ($rows['quantity']); ?></td>
-                                
+                                <td class="column3"> <?php echo ($rows['quantity']); ?> Kg</td>       
                             </tr>
                             <?php endforeach; ?>
-</tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -107,9 +95,9 @@ if($stmt) {
 
     <section>
 <a href="feed_sch.php">
-    <button class="formbold-btn">Store Schedule</button>
+    <button class="formbold-btn">Create  Schedule</button>
 </a>
-<a href="farm.php">
+<a href="dashboard.php">
     <button class="formbold-btn">Dashboard</button>
 </a>
 </section>
@@ -124,9 +112,7 @@ if($stmt) {
                 <a href="" class="logo">
                     <h2>FarmHouse</h2>
                 </a>
-                <p>Oyo State Nigeria</p>
-                <p>08052148610</p>
-                <p>ajaiyeobajibola@gmail.com</p>
+
                 <div class="social-icon">
                     <a href=""><i class="fa-brands fa-facebook"></i></a>
                     <a href=""><i class="fa-brands fa-twitter"></i></a>
