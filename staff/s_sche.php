@@ -10,7 +10,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   exit;
 }
 
-$sql = " SELECT id, feed,  quantity, feed_time from feed_schedule";
+$sql = " SELECT id, feed,  quantity, feed_time, staff from feed_schedule";
 $stmt =  mysqli_prepare($link, $sql);
 
 if($stmt) {
@@ -71,6 +71,7 @@ if($stmt) {
                             <thead>
                             <tr class="table100-head">
                                     <th>Id</th>
+                                    <th>Staff</th>
                                     <th>Feed </th>
                                     <th>Time</th>
                                     <th>Quantity</th>     
@@ -80,6 +81,7 @@ if($stmt) {
                             <?php foreach($farm as $rows): ?>
                                 <tr>
                                 <td class="column1"> <?php echo ($rows['id']); ?></td>   
+                                <td class="column1"> <?php echo ($rows['staff']); ?></td>
                                 <td class="column1"> <?php echo ($rows['feed']); ?></td>
                                 <td class="column2"> <?php echo ($rows['feed_time']); ?></td>
                                 <td class="column3"> <?php echo ($rows['quantity']); ?> Kg</td>       

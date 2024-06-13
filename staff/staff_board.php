@@ -84,10 +84,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </a>
             </section>
 
-
-
-   
-
     <section class="contact" id="contact">
         <div class="contact-info">
             <div class="first-info">

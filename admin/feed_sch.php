@@ -8,16 +8,17 @@ if (isset($_POST['submit'])) {
     $feed_time = $_POST['feed_time'];
     $quantity = $_POST['quantity'];
     $feed = $_POST['feed'];
+     $staff = $_POST['staff']; 
 
 
     // Prepare the SQL statement
-    $sql = "INSERT INTO `feed_schedule` (feed_time, quantity, feed ) VALUES ( ?, ?, ?)";
+    $sql = "INSERT INTO `feed_schedule` (feed_time, quantity, feed , staff) VALUES ( ?, ?, ?,? )";
     
     // Prepare the statement
     $stmt = $link->prepare($sql);
     if ($stmt) {
         // Bind parameters
-        $stmt->bind_param("sis", $feed_time, $quantity, $feed);
+        $stmt->bind_param("siss", $feed_time, $quantity, $feed, $staff);
         
         // Execute the statement
         if ($stmt->execute()) {
@@ -83,6 +84,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <div class="formbold-form-title">
 <!-- <h2>FarmSync</h2> -->
 </div>
+
+
+<?php
+ $staff = isset($_POST['staff']) ? $_POST['staff'] : '';
+?>
+<div class="formbold-input-flex">
+<label for="staff" class="formbold-form-label">staff</label>
+<input type="text" name="staff" id="" required class="formbold-form-input  <?php echo (!empty($staff_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $staff; ?>">
+<span class="invalid-feedback" style="display: none;"><?php echo $staff_err; ?></span>
+</div>
 <?php
 $feed = isset($_POST['feed']) ? $_POST['feed'] : '';
 ?>
@@ -91,6 +102,8 @@ $feed = isset($_POST['feed']) ? $_POST['feed'] : '';
 <input type="text" name="feed" id="feed" required class="formbold-form-input  <?php echo (!empty($feed_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $feed; ?>">
 <span class="invalid-feedback" style="display: none;"><?php echo $feed_err; ?></span>
 </div>
+
+
 
 <div class="formbold-input-flex">
 <label for="quantity" class="formbold-form-label">Quantity</label>

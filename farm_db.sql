@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2024 at 09:02 PM
+-- Generation Time: Jun 13, 2024 at 04:09 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -55,17 +55,16 @@ CREATE TABLE `feed_schedule` (
   `id` int(11) NOT NULL,
   `feed` varchar(100) NOT NULL,
   `feed_time` datetime(6) NOT NULL,
-  `quantity` int(30) NOT NULL
+  `quantity` int(100) NOT NULL,
+  `staff` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `feed_schedule`
 --
 
-INSERT INTO `feed_schedule` (`id`, `feed`, `feed_time`, `quantity`) VALUES
-(1, 'Grower Pellet', '2024-06-07 05:13:00.000000', 10),
-(2, 'Grower Pellet', '2024-06-07 04:20:00.000000', 5),
-(3, 'finisher pellet', '2024-06-06 13:30:00.000000', 10);
+INSERT INTO `feed_schedule` (`id`, `feed`, `feed_time`, `quantity`, `staff`) VALUES
+(1, 'Grower Pellet', '2024-06-14 08:30:00.000000', 4, 'iluyo made');
 
 -- --------------------------------------------------------
 
@@ -186,7 +185,7 @@ ALTER TABLE `farm_users`
 -- AUTO_INCREMENT for table `feed_schedule`
 --
 ALTER TABLE `feed_schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `feed_stock`

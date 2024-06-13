@@ -11,6 +11,7 @@ if (
         $date = $_POST['date'];
         $comment = $_POST['comment'];
 
+
         $sql = " INSERT INTO   `feed_stock` ( product, unit, quantity, date , comment) VALUES (?,?,?,?,?)";
         // Prepare the SQL statement
         $stmt = $link ->prepare($sql);

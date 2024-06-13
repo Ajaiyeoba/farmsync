@@ -90,7 +90,7 @@ if($stmt) {
 <section style="background-color: #04b01d; ">
 <div class="formbold-main-wrappper">
 <div class="formbold-form-wrapper">
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multitype">
 <div class="formbold-form-title">
 <h2> Add Pond</h2>
 </div>

@@ -10,8 +10,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 $sql = " SELECT id, date, pond, quantity, species, total_weight, avg_weight, population from stock";
-
-
 $stmt =  mysqli_prepare($link, $sql);
 
 if($stmt) {
@@ -85,7 +83,7 @@ if($stmt) {
                                 <td class="column1"> <?php echo ($rows['id']); ?></td>   
                                 <td class="column1"> <?php echo ($rows['date']); ?></td>
                                 <td class="column2"> <?php echo ($rows['species']); ?></td>
-                                <td class="column3"> <?php echo ($rows['pond']); ?> Kg</td>     
+                                <td class="column3"> <?php echo ($rows['pond']); ?> </td>     
                                 <td class="column3"> <?php echo ($rows['avg_weight']); ?> Kg</td>   
                                 <td class="column3"> <?php echo ($rows['total_weight']); ?> Kg</td>    
                                 <td class="column3"> <?php echo ($rows['population']); ?> </td>              
